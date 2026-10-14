@@ -1,0 +1,22 @@
+
+n=1000  |C|=54  |CORE|=9  gamma(C)=0.9270
+  CCAR-H       |R|=22  t=0.5s  valid=True
+  Core-init    |R|=22  t=1.0s  valid=True
+  QuickReduct  |R|=24  t=2.4s  valid=True
+
+n=2000  |C|=54  |CORE|=10  gamma(C)=0.8645
+  CCAR-H       |R|=30  t=3.6s  valid=True
+  Core-init    |R|=30  t=10.0s  valid=True
+  QuickReduct  |R|=37  t=32.1s  valid=True
+
+n=5000  |C|=54  |CORE|=10  gamma(C)=0.7456
+  CCAR-H       |R|=35  t=39.7s  valid=True
+  Core-init    |R|=35  t=178.9s  valid=True
+  QuickReduct  |R|=36  t=305.8s  valid=True
+
+n=10000  |C|=54  |CORE|=10  gamma(C)=0.5963
+  CCAR-H       |R|=37  t=140.3s  valid=True
+  Core-init    |R|=37  t=848.5s  valid=True
+  QuickReduct  |R|=37  t=1056.3s  valid=True
+
+Saved -> ./results_v8/scalability_v8.csv

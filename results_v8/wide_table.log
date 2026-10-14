@@ -1,0 +1,74 @@
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: divide by zero encountered in matmul
+  logits = X_inf @ coef
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: overflow encountered in matmul
+  logits = X_inf @ coef
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: invalid value encountered in matmul
+  logits = X_inf @ coef
+[wide] |U|=400 |C|=20 ...
+  ccar_e     t=0.114s |R|=7 core=0 surr=True validΔ=True
+  ccar_h     t=0.064s |R|=8 core=0 surr=True validΔ=True
+  nicp       t=0.055s |R|=8 core=0 surr=False validΔ=True
+  wang_knn   t=0.071s |R|=1 core=0 surr=False validΔ=False
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: divide by zero encountered in matmul
+  logits = X_inf @ coef
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: overflow encountered in matmul
+  logits = X_inf @ coef
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: invalid value encountered in matmul
+  logits = X_inf @ coef
+[wide] |U|=400 |C|=40 ...
+  ccar_e     t=47.830s |R|=7 core=0 surr=True validΔ=True
+  ccar_h     t=0.105s |R|=7 core=0 surr=True validΔ=True
+  nicp       t=0.096s |R|=7 core=0 surr=False validΔ=True
+  wang_knn   t=0.121s |R|=1 core=0 surr=False validΔ=False
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: divide by zero encountered in matmul
+  logits = X_inf @ coef
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: overflow encountered in matmul
+  logits = X_inf @ coef
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: invalid value encountered in matmul
+  logits = X_inf @ coef
+[wide] |U|=400 |C|=60 ...
+  ccar_h     t=0.170s |R|=7 core=0 surr=True validΔ=True
+  nicp       t=0.160s |R|=7 core=0 surr=False validΔ=True
+  wang_knn   t=0.172s |R|=1 core=0 surr=False validΔ=False
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: divide by zero encountered in matmul
+  logits = X_inf @ coef
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: overflow encountered in matmul
+  logits = X_inf @ coef
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: invalid value encountered in matmul
+  logits = X_inf @ coef
+[wide] |U|=400 |C|=80 ...
+  ccar_h     t=0.242s |R|=8 core=0 surr=True validΔ=True
+  nicp       t=0.209s |R|=7 core=0 surr=False validΔ=True
+  wang_knn   t=0.224s |R|=1 core=0 surr=False validΔ=False
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: divide by zero encountered in matmul
+  logits = X_inf @ coef
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: overflow encountered in matmul
+  logits = X_inf @ coef
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: invalid value encountered in matmul
+  logits = X_inf @ coef
+[wide] |U|=400 |C|=100 ...
+  ccar_h     t=0.273s |R|=8 core=0 surr=True validΔ=True
+  nicp       t=0.271s |R|=8 core=0 surr=False validΔ=True
+  wang_knn   t=0.274s |R|=1 core=0 surr=False validΔ=False
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: divide by zero encountered in matmul
+  logits = X_inf @ coef
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: overflow encountered in matmul
+  logits = X_inf @ coef
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: invalid value encountered in matmul
+  logits = X_inf @ coef
+[wide] |U|=400 |C|=150 ...
+  ccar_h     t=0.395s |R|=7 core=0 surr=True validΔ=True
+  nicp       t=0.393s |R|=7 core=0 surr=False validΔ=True
+  wang_knn   t=0.409s |R|=1 core=0 surr=False validΔ=False
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: divide by zero encountered in matmul
+  logits = X_inf @ coef
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: overflow encountered in matmul
+  logits = X_inf @ coef
+./code/experiments/run_wide_table_stress.py:36: RuntimeWarning: invalid value encountered in matmul
+  logits = X_inf @ coef
+[wide] |U|=400 |C|=200 ...
+  ccar_h     t=0.450s |R|=7 core=0 surr=True validΔ=True
+  nicp       t=0.465s |R|=7 core=0 surr=False validΔ=True
+  wang_knn   t=0.536s |R|=1 core=0 surr=False validΔ=False
+Wrote ./results_v8/wide_table_stress_v8.csv
+Wrote ./results_v8/wide_table_stress.tex
