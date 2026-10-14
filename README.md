@@ -1,7 +1,7 @@
 # CCAR-NRS reproducibility package (v8)
 
-Code and results for "Core-Centric Attribute Reduction for Neighborhood Rough Sets: Certified Minimal Reducts with
-Core-Restricted Pair Enumeration" (Tran, Nguyen, Nguyen).
+Code and results for "Core-Centric Attribute Reduction for Neighborhood Rough Sets: Minimum-Size Reducts from the Core and
+Residual Conflicting Pairs" (Tran, Nguyen, Nguyen).
 
 ## Layout
 - `code/` — `ccar/` (CCAR-E, CCAR-H, surrogate seed, core and conflicting-pair routines), `baselines/` (QuickReduct, Core-init,
