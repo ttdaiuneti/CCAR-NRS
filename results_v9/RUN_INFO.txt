@@ -1,0 +1,7 @@
+host: Apple M4 Pro, 51539607552
+python 3.9.6 numpy 2.0.2 sklearn 1.6.1 scipy 1.13.1
+cmd: python3 -m experiments.run_benchmark --jobs 1 --results-dir ../results_v9
+code: v8 + max-distance over the selected set computed once per row block and reused for every candidate (all greedy baselines, CCAR-H tie-break); CCAR-H prune on the residual family when the core is non-empty (same reducts as v7)
+started: Wed Oct 14 05:17:38 UTC 2026
+benchmark finished: Wed Oct 14 05:46:04 UTC 2026
+extras finished: Wed Oct 14 05:54:02 UTC 2026

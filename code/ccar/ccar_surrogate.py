@@ -84,7 +84,15 @@ def ccar_pipeline(
         removable = (sorted(s) if exact_hitting else list(reversed(s))) + seed
         reduct = backward_prune(X_work, y, reduct, removable, gamma_c, delta)
     elif not exact_hitting:
-        reduct = backward_prune(X_work, y, reduct, list(reversed(s)), gamma_c, delta)
+        # Non-empty core: the core hits every entry of M_POS outside F, so
+        # gamma(R \ {a}) >= gamma(C) iff S \ {a} still hits F (Lemma 3.9 / Thm 3.10).
+        # The prune therefore works on the residual family and needs no gamma evaluation.
+        keep = set(s)
+        for a in reversed(s):
+            trial = keep - {a}
+            if all(trial & f for f in family):
+                keep = trial
+        reduct = sorted(set(seed) | keep)
     return CCARResult(
         reduct_indices=reduct,
         core_indices=list(core),

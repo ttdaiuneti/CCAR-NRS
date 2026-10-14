@@ -3,7 +3,7 @@
 Runs CCAR-H, Core-init and QuickReduct on one stratified subsample per size
 (seed 42). The timer covers the reduction call only; |CORE|, gamma_delta(C) and
 the validity check gamma_delta(R) >= gamma_delta(C) are computed outside it.
-Writes results_v8/scalability_v8.csv.
+Writes results_v9/scalability_v9.csv.
 """
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ from baselines.quick_reduct_nrs import quick_reduct_nrs
 
 DELTA = 0.1
 SIZES = [1000, 2000, 5000, 10000]
-OUT = ROOT / "results_v8" / "scalability_v8.csv"
+OUT = ROOT / "results_v9" / "scalability_v9.csv"
 
 
 def subsample(X, y, n, seed=42):

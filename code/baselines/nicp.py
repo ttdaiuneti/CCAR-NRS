@@ -26,7 +26,7 @@ from __future__ import annotations
 
 import numpy as np
 
-from ccar.nrs import _block_distance_rows, _row_blocks_for, block_distance, normalize_features, row_blocks
+from ccar.nrs import _block_distance_rows, _row_blocks_for, block_distance, normalize_features, pair_counts, row_blocks
 
 
 def neighbor_inconsistent_pairs(
@@ -100,11 +100,15 @@ def nicp_reduction(
 
     while remaining and cur_nip > target_nip:
         best_attr, best_nip = None, None
-        for a in sorted(remaining):
-            if accelerated:
-                nip = int(_row_pair_counts(X_work, y, active, np.array(selected + [a], dtype=int), delta).sum())
-            else:
-                nip = neighbor_inconsistent_pairs(X_work, y, np.array(selected + [a], dtype=int), delta)
+        cand_list = sorted(remaining)
+        if accelerated:
+            nips = pair_counts(X_work, y, np.array(selected, dtype=int), cand_list, delta, active)
+        else:
+            nips = [
+                neighbor_inconsistent_pairs(X_work, y, np.array(selected + [a], dtype=int), delta)
+                for a in cand_list
+            ]
+        for a, nip in zip(cand_list, nips):
             if best_nip is None or nip < best_nip:
                 best_nip, best_attr = nip, a
         if best_attr is None or best_nip >= cur_nip:

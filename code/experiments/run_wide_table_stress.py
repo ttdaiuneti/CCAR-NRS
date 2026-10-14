@@ -23,7 +23,7 @@ from ccar.nrs import dependency_degree, normalize_features
 
 
 ROOT = Path(__file__).resolve().parents[2]
-OUT_DIR = ROOT / "results_v8"
+OUT_DIR = ROOT / "results_v9"
 TEX_OUT = OUT_DIR / "wide_table_stress.tex"
 
 
@@ -158,7 +158,7 @@ def main() -> None:
     p_list = [int(x) for x in args.p_list.split(",") if x.strip()]
 
     OUT_DIR.mkdir(parents=True, exist_ok=True)
-    out_csv = OUT_DIR / "wide_table_stress_v8.csv"
+    out_csv = OUT_DIR / "wide_table_stress_v9.csv"
     rows: list[dict] = []
 
     for p in p_list:

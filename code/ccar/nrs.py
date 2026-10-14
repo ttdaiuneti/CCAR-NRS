@@ -174,12 +174,52 @@ def gain_counts(
     """For each candidate a: number of `active` objects that enter POS_{B u {a}}.
 
     sig(a|B) = count / |U| exactly: gamma(B u {a}) - gamma(B) with
-    |POS_{B u {a}}| = (|U| - |active|) + count."""
+    |POS_{B u {a}}| = (|U| - |active|) + count.
+
+    The max-distance over B is computed once per row block and reused for every
+    candidate, so one forward step costs |B| + |cands| attribute passes instead
+    of |cands| * (|B| + 1)."""
     base_idx = np.asarray(base_idx, dtype=int)
-    return [
-        int(np.count_nonzero(rows_in_pos(X, y, active, np.append(base_idx, a), delta)))
-        for a in cands
-    ]
+    n = X.shape[0]
+    active = np.asarray(active, dtype=int)
+    counts = np.zeros(len(cands), dtype=np.int64)
+    for s, e in _row_blocks_for(active.size, n):
+        rows = active[s:e]
+        if base_idx.size:
+            D = _block_distance_rows(X, rows, base_idx)
+        else:
+            D = np.zeros((rows.size, n))
+        cross = y[rows, None] != y[None, :]
+        for ci, a in enumerate(cands):
+            col = X[:, a]
+            d = np.maximum(D, np.abs(col[rows, None] - col[None, :]))
+            counts[ci] += int(np.count_nonzero(~((d <= delta) & cross).any(axis=1)))
+    return [int(c) for c in counts]
+
+
+def pair_counts(
+    X: np.ndarray,
+    y: np.ndarray,
+    base_idx: np.ndarray,
+    cands: list[int],
+    delta: float,
+    active: np.ndarray,
+) -> list[int]:
+    """For each candidate a: number of cross-class delta-neighbor pairs (ordered,
+    first object in `active`) under B u {a}. Same max-distance reuse as gain_counts."""
+    base_idx = np.asarray(base_idx, dtype=int)
+    n = X.shape[0]
+    active = np.asarray(active, dtype=int)
+    counts = np.zeros(len(cands), dtype=np.int64)
+    for s, e in _row_blocks_for(active.size, n):
+        rows = active[s:e]
+        D = _block_distance_rows(X, rows, base_idx) if base_idx.size else np.zeros((rows.size, n))
+        cross = y[rows, None] != y[None, :]
+        for ci, a in enumerate(cands):
+            col = X[:, a]
+            d = np.maximum(D, np.abs(col[rows, None] - col[None, :]))
+            counts[ci] += int(np.count_nonzero((d <= delta) & cross))
+    return [int(c) for c in counts]
 
 
 def backward_prune(

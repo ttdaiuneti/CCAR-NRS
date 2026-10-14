@@ -41,7 +41,8 @@ METRICS = ["n_reduct_mean", "runtime_mean", "knn_mean", "svm_mean"]
 
 
 def pivot(df: pd.DataFrame, metric: str, methods=METHODS, datasets=None) -> pd.DataFrame:
-    p = df.pivot(index="dataset", columns="algorithm", values=metric)[methods]
+    # values that differ only by floating-point noise are ties (rounding to 10 decimals)
+    p = df.pivot(index="dataset", columns="algorithm", values=metric)[methods].round(10)
     return p.loc[datasets] if datasets is not None else p.loc[[d for d in DS_ORDER if d in p.index]]
 
 

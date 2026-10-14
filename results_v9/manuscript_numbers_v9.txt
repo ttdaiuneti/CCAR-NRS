@@ -1,0 +1,182 @@
+=== Friedman / Nemenyi (N=18, k=7) ===
+n_reduct_mean   chi2=19.530 p=0.003356 CD=2.124  CCAR-E=2.86 CCAR-H=3.28 Core-init=3.83 QuickReduct=5.11 NICP=3.81 GBNRS=4.50 WNRS=4.61
+runtime_mean    chi2=73.667 p=7.22e-14 CD=2.124  CCAR-E=2.83 CCAR-H=3.28 Core-init=1.72 QuickReduct=3.11 NICP=4.78 GBNRS=7.00 WNRS=5.28
+knn_mean        chi2=2.366 p=0.8831 CD=2.124  CCAR-E=4.00 CCAR-H=3.86 Core-init=3.67 QuickReduct=3.89 NICP=4.56 GBNRS=4.00 WNRS=4.03
+svm_mean        chi2=10.334 p=0.1113 CD=2.124  CCAR-E=4.14 CCAR-H=3.92 Core-init=3.28 QuickReduct=3.58 NICP=3.75 GBNRS=5.00 WNRS=4.33
+runtime rank gaps from CCAR-E: CCAR-H=0.44 Core-init=-1.11 QuickReduct=0.28 NICP=1.94 GBNRS=4.17 WNRS=2.44
+
+=== CCAR-E vs six baselines, Wilcoxon, Holm over 6 (per metric) ===
+n_reduct_mean   CCAR-H: p=0.0656 pH=0.223 r=0.92 Core-init: p=0.0178 pH=0.089 r=0.90 QuickReduct: p=0.0015 pH=0.009 r=0.88 NICP: p=0.0558 pH=0.223 r=0.64 GBNRS: p=0.1772 pH=0.354 r=0.33 WNRS: p=0.5066 pH=0.507 r=0.18
+runtime_mean    CCAR-H: p=0.2860 pH=0.552 r=0.25 Core-init: p=0.1841 pH=0.552 r=0.31 QuickReduct: p=0.1841 pH=0.552 r=0.31 NICP: p=0.0642 pH=0.257 r=0.44 GBNRS: p=0.0002 pH=0.001 r=0.88 WNRS: p=0.0198 pH=0.099 r=0.55
+knn_mean        CCAR-H: p=1.0000 pH=1.000 r=0.00 Core-init: p=0.7794 pH=1.000 r=0.10 QuickReduct: p=0.8753 pH=1.000 r=0.05 NICP: p=0.0754 pH=0.452 r=0.54 GBNRS: p=0.8361 pH=1.000 r=0.05 WNRS: p=0.6496 pH=1.000 r=0.13
+svm_mean        CCAR-H: p=0.6784 pH=1.000 r=0.14 Core-init: p=0.0499 pH=0.300 r=0.69 QuickReduct: p=0.1730 pH=0.865 r=0.38 NICP: p=0.4769 pH=1.000 r=0.21 GBNRS: p=0.3305 pH=1.000 r=0.26 WNRS: p=0.4802 pH=1.000 r=0.20
+mean runtime (s): CCAR-E=0.147 CCAR-H=0.097 Core-init=0.076 QuickReduct=0.232 NICP=0.740 GBNRS=14.762 WNRS=0.237
+
+=== CCAR-E vs NICP, Holm over 4 metrics ===
+n_reduct_mean   E=9.322 NICP=9.478 p=0.0558 pH=0.2233 r=0.64 W/T/L=8/9/1
+runtime_mean    E=0.147 NICP=0.740 p=0.0642 pH=0.2233 r=0.44 W/T/L=14/0/4
+knn_mean        E=0.825 NICP=0.815 p=0.0754 pH=0.2233 r=0.54 W/T/L=7/9/2
+svm_mean        E=0.844 NICP=0.844 p=0.4769 pH=0.4769 r=0.21 W/T/L=3/11/4
+median NICP/E speedup=2.6907; E faster on 14/18; losses: ['wine', 'sonar', 'ionosphere', 'dermatology']
+
+=== Validity (all folds) ===
+    CCAR-E & 18/18 & --- \\  folds valid: 
+    CCAR-H & 18/18 & --- \\  folds valid: 
+    Core-init & 18/18 & --- \\  folds valid: 
+    QuickReduct & 18/18 & --- \\  folds valid: 
+    NICP & 18/18 & --- \\  folds valid: 
+    GBNRS & 2/18 & Wine, WDBC, Ionosphere, Heart, German Credit, Iris, Glass, Vehicle, Vowel, Australian, Ecoli, Yeast, Dermatology, Segment, Chess (KR-KP), Congressional \\  folds valid: wine=1 wdbc=0 ionosphere=1 heart=2 credit=4 iris=4 glass=4 vehicle=4 vowel=1 australian=2 ecoli=4 yeast=4 dermatology=3 segment=1 chess=4 vote=4
+    WNRS & 15/18 & German Credit, Chess (KR-KP), Congressional \\  folds valid: credit=2 chess=0 vote=0
+18/18-valid methods: ['CCAR-E', 'CCAR-H', 'Core-init', 'QuickReduct', 'NICP']
+
+=== Validity-conditioned Friedman on |R| (18/18-valid methods only) ===
+k=5 chi2=32.557 p=1.472e-06 CD=1.438 CCAR-E=2.14 CCAR-H=2.56 Core-init=3.03 QuickReduct=4.22 NICP=3.06
+invalid-last k=7 chi2=77.321 p=1.276e-14 CD=2.124 CCAR-E=2.31 CCAR-H=2.72 Core-init=3.28 QuickReduct=4.56 NICP=3.25 GBNRS=6.75 WNRS=5.14
+
+=== Consistency strata ===
+consistent (8): |R| chi2=21.906 p=0.001259 CD=3.185; runtime chi2=27.375 p=0.000123 E-rank=3.50
+    CCAR-E & 9.38 & 2.12 & 8/8
+    CCAR-H & 9.60 & 3.06 & 8/8
+    Core-init & 10.07 & 4.12 & 8/8
+    QuickReduct & 10.75 & 5.25 & 8/8
+    NICP & 9.57 & 3.31 & 8/8
+    GBNRS & 19.48 & 6.25 & 1/8
+    WNRS & 6.03 & 3.88 & 5/8
+inconsistent (10): |R| chi2=14.270 p=0.02676 CD=2.849; runtime chi2=55.629 p=3.46e-10 E-rank=2.30
+    CCAR-E & 9.28 & 3.45 & 10/10
+    CCAR-H & 9.28 & 3.45 & 10/10
+    Core-init & 9.30 & 3.60 & 10/10
+    QuickReduct & 9.54 & 5.00 & 10/10
+    NICP & 9.40 & 4.20 & 10/10
+    GBNRS & 8.10 & 3.10 & 1/10
+    WNRS & 9.66 & 5.20 & 10/10
+
+=== Leave-one-dataset-out rank bands (CCAR-E) ===
+runtime_mean: [2.65,2.94] best-or-tied in 0/18
+n_reduct_mean: [2.76,2.97] best-or-tied in 18/18
+
+=== Cost-exponent fits log t = a + b log|U| + c log|C| ===
+CCAR-E       b=1.06±0.25 c=2.17±0.31 R2=0.84
+CCAR-H       b=1.55±0.13 c=1.40±0.16 R2=0.95
+Core-init    b=1.71±0.07 c=1.07±0.09 R2=0.98
+QuickReduct  b=2.18±0.06 c=0.75±0.08 R2=0.99
+NICP         b=2.43±0.09 c=0.67±0.12 R2=0.98
+GBNRS        b=0.92±0.22 c=0.99±0.28 R2=0.71
+WNRS         b=1.63±0.06 c=0.84±0.07 R2=0.99
+ratio t_base/t_E at |U|=1000:
+  CCAR-H       1.60 0.68 0.40 0.27 0.11 0.05  crossover |C|≈18  |C|=40 over |U|=1e3,1e4,1e5: 0.5 1.7 5.0
+  Core-init    1.58 0.47 0.22 0.12 0.04 0.01  crossover |C|≈15  |C|=40 over |U|=1e3,1e4,1e5: 0.3 1.5 6.7
+  QuickReduct  3.70 0.77 0.29 0.14 0.03 0.01  crossover |C|≈25  |C|=40 over |U|=1e3,1e4,1e5: 0.5 6.7 88.0
+  NICP         7.10 1.37 0.48 0.22 0.04 0.01  crossover |C|≈37  |C|=40 over |U|=1e3,1e4,1e5: 0.9 20.6 476.8
+  WNRS         5.91 1.36 0.54 0.27 0.06 0.01  crossover |C|≈38  |C|=40 over |U|=1e3,1e4,1e5: 0.9 3.4 12.7
+
+=== Table rows: reduct size (bold among valid cells) ===
+  Wine & 13 & \textbf{5.0} & \textbf{5.0} & \underline{5.2} & \underline{5.2} & \textbf{5.0} & 4.8 & \underline{5.2} \\
+  WDBC & 30 & \textbf{10.6} & \textbf{10.6} & \underline{10.8} & 11.8 & 11.2 & 2.0 & 12.8 \\
+  Sonar & 60 & \textbf{5.0} & \underline{5.6} & \underline{5.6} & \underline{5.6} & \underline{5.6} & 45.2 & 6.0 \\
+  Ionosphere & 34 & \textbf{6.6} & \underline{7.0} & 8.4 & 8.4 & 7.2 & 11.4 & 8.6 \\
+  Heart & 13 & \textbf{8.2} & \textbf{8.2} & \textbf{8.2} & \underline{8.4} & \underline{8.4} & 10.0 & 8.6 \\
+  German Credit & 20 & \textbf{8.0} & \underline{8.6} & \underline{8.6} & 9.4 & \underline{8.6} & 16.4 & 4.4 \\
+  Diabetes & 8 & \textbf{8.0} & \textbf{8.0} & \textbf{8.0} & \textbf{8.0} & \textbf{8.0} & \textbf{8.0} & \textbf{8.0} \\
+  Iris & 4 & \textbf{4.0} & \textbf{4.0} & \textbf{4.0} & \textbf{4.0} & \textbf{4.0} & 3.4 & \textbf{4.0} \\
+  Glass & 9 & \textbf{7.2} & \textbf{7.2} & \textbf{7.2} & 7.6 & \underline{7.4} & 7.8 & 7.6 \\
+  Vehicle & 18 & \textbf{13.0} & \textbf{13.0} & \textbf{13.0} & \underline{13.6} & \textbf{13.0} & 17.2 & \underline{13.6} \\
+  Vowel & 13 & \textbf{10.6} & \textbf{10.6} & \textbf{10.6} & \textbf{10.6} & \underline{11.0} & 9.2 & \textbf{10.6} \\
+  Australian & 14 & \textbf{13.6} & \textbf{13.6} & \textbf{13.6} & \underline{13.8} & \textbf{13.6} & 10.6 & 14.0 \\
+  Ecoli & 7 & \textbf{6.0} & \textbf{6.0} & \textbf{6.0} & \textbf{6.0} & \textbf{6.0} & 6.4 & \textbf{6.0} \\
+  Yeast & 8 & \textbf{8.0} & \textbf{8.0} & \textbf{8.0} & \textbf{8.0} & \textbf{8.0} & 7.8 & \textbf{8.0} \\
+  Dermatology & 34 & \underline{7.6} & \underline{7.6} & 9.8 & 9.8 & \textbf{7.0} & 22.6 & 9.4 \\
+  Segment & 19 & \textbf{11.8} & \textbf{11.8} & \textbf{11.8} & \underline{12.0} & \textbf{11.8} & 8.6 & \underline{12.0} \\
+  Chess (KR-KP) & 36 & \textbf{27.2} & \textbf{27.2} & \textbf{27.2} & \underline{29.8} & \textbf{27.2} & 30.0 & 5.0 \\
+  Congressional & 16 & \textbf{7.4} & \underline{7.6} & \underline{7.6} & 9.4 & \underline{7.6} & 15.4 & 1.0 \\
+  \emph{Average} & --- & \textbf{9.3} & \underline{9.4} & 9.6 & 10.1 & 9.5 & 13.2 & 8.0 \\
+  \emph{W/T/L} & --- & --- & 4/14/0 & 7/11/0 & 13/5/0 & 8/9/1 & 10/1/7 & 10/5/3 \\
+mean |R|: CCAR-E=9.32 CCAR-H=9.42 Core-init=9.64 QuickReduct=10.08 NICP=9.48 GBNRS=13.16 WNRS=8.04
+
+=== Table rows: kNN accuracy (mean \pm std; Acc_full column not included) ===
+  Wine & \underline{0.94\,$\pm$\,0.02} & \textbf{0.96\,$\pm$\,0.04} & \underline{0.94\,$\pm$\,0.02} & \underline{0.94\,$\pm$\,0.02} & 0.93\,$\pm$\,0.04 & 0.89\,$\pm$\,0.05 & 0.92\,$\pm$\,0.01 \\
+  WDBC & \underline{0.94\,$\pm$\,0.02} & \underline{0.94\,$\pm$\,0.02} & \textbf{0.95\,$\pm$\,0.02} & \underline{0.94\,$\pm$\,0.02} & \underline{0.94\,$\pm$\,0.02} & 0.91\,$\pm$\,0.03 & \underline{0.94\,$\pm$\,0.01} \\
+  Sonar & 0.76\,$\pm$\,0.05 & \underline{0.77\,$\pm$\,0.06} & 0.71\,$\pm$\,0.06 & 0.71\,$\pm$\,0.06 & 0.73\,$\pm$\,0.04 & \textbf{0.82\,$\pm$\,0.07} & 0.76\,$\pm$\,0.05 \\
+  Ionosphere & \underline{0.88\,$\pm$\,0.03} & \underline{0.88\,$\pm$\,0.03} & \textbf{0.89\,$\pm$\,0.03} & \textbf{0.89\,$\pm$\,0.03} & \textbf{0.89\,$\pm$\,0.02} & 0.85\,$\pm$\,0.02 & \textbf{0.89\,$\pm$\,0.04} \\
+  Heart & \underline{0.80\,$\pm$\,0.04} & \underline{0.80\,$\pm$\,0.04} & 0.79\,$\pm$\,0.05 & 0.78\,$\pm$\,0.03 & 0.78\,$\pm$\,0.03 & \textbf{0.81\,$\pm$\,0.03} & 0.79\,$\pm$\,0.03 \\
+  German Credit & \textbf{0.71\,$\pm$\,0.01} & \underline{0.70\,$\pm$\,0.03} & \textbf{0.71\,$\pm$\,0.01} & \underline{0.70\,$\pm$\,0.02} & \underline{0.70\,$\pm$\,0.01} & \textbf{0.71\,$\pm$\,0.02} & 0.63\,$\pm$\,0.12 \\
+  Diabetes & \textbf{0.72\,$\pm$\,0.01} & \textbf{0.72\,$\pm$\,0.01} & \textbf{0.72\,$\pm$\,0.01} & \textbf{0.72\,$\pm$\,0.01} & \textbf{0.72\,$\pm$\,0.01} & \textbf{0.72\,$\pm$\,0.01} & \textbf{0.72\,$\pm$\,0.01} \\
+  Iris & \textbf{0.95\,$\pm$\,0.05} & \textbf{0.95\,$\pm$\,0.05} & \textbf{0.95\,$\pm$\,0.05} & \textbf{0.95\,$\pm$\,0.05} & \textbf{0.95\,$\pm$\,0.05} & \textbf{0.95\,$\pm$\,0.05} & \textbf{0.95\,$\pm$\,0.05} \\
+  Glass & \underline{0.69\,$\pm$\,0.05} & \underline{0.69\,$\pm$\,0.05} & \underline{0.69\,$\pm$\,0.05} & 0.68\,$\pm$\,0.07 & 0.67\,$\pm$\,0.06 & \underline{0.69\,$\pm$\,0.05} & \textbf{0.70\,$\pm$\,0.05} \\
+  Vehicle & \underline{0.69\,$\pm$\,0.02} & \underline{0.69\,$\pm$\,0.02} & \underline{0.69\,$\pm$\,0.02} & \underline{0.69\,$\pm$\,0.02} & \underline{0.69\,$\pm$\,0.02} & \textbf{0.71\,$\pm$\,0.01} & \underline{0.69\,$\pm$\,0.02} \\
+  Vowel & \underline{0.94\,$\pm$\,0.01} & \underline{0.94\,$\pm$\,0.01} & \underline{0.94\,$\pm$\,0.01} & \underline{0.94\,$\pm$\,0.01} & \textbf{0.95\,$\pm$\,0.00} & \underline{0.94\,$\pm$\,0.02} & \underline{0.94\,$\pm$\,0.01} \\
+  Australian & \textbf{0.83\,$\pm$\,0.01} & \textbf{0.83\,$\pm$\,0.01} & \textbf{0.83\,$\pm$\,0.01} & \textbf{0.83\,$\pm$\,0.01} & \textbf{0.83\,$\pm$\,0.01} & \textbf{0.83\,$\pm$\,0.03} & \textbf{0.83\,$\pm$\,0.01} \\
+  Ecoli & \textbf{0.86\,$\pm$\,0.03} & \textbf{0.86\,$\pm$\,0.03} & \textbf{0.86\,$\pm$\,0.03} & \textbf{0.86\,$\pm$\,0.03} & \textbf{0.86\,$\pm$\,0.03} & \underline{0.84\,$\pm$\,0.04} & \textbf{0.86\,$\pm$\,0.03} \\
+  Yeast & \textbf{0.55\,$\pm$\,0.02} & \textbf{0.55\,$\pm$\,0.02} & \textbf{0.55\,$\pm$\,0.02} & \textbf{0.55\,$\pm$\,0.02} & \textbf{0.55\,$\pm$\,0.02} & \textbf{0.55\,$\pm$\,0.02} & \textbf{0.55\,$\pm$\,0.02} \\
+  Dermatology & 0.77\,$\pm$\,0.03 & 0.74\,$\pm$\,0.07 & \underline{0.90\,$\pm$\,0.05} & \underline{0.90\,$\pm$\,0.05} & 0.66\,$\pm$\,0.12 & \textbf{0.92\,$\pm$\,0.02} & 0.89\,$\pm$\,0.05 \\
+  Segment & \textbf{0.95\,$\pm$\,0.01} & \textbf{0.95\,$\pm$\,0.01} & \textbf{0.95\,$\pm$\,0.01} & \textbf{0.95\,$\pm$\,0.00} & \textbf{0.95\,$\pm$\,0.01} & \textbf{0.95\,$\pm$\,0.01} & \textbf{0.95\,$\pm$\,0.01} \\
+  Chess (KR-KP) & \textbf{0.94\,$\pm$\,0.01} & \textbf{0.94\,$\pm$\,0.01} & \textbf{0.94\,$\pm$\,0.01} & \textbf{0.94\,$\pm$\,0.01} & \textbf{0.94\,$\pm$\,0.01} & \underline{0.92\,$\pm$\,0.06} & 0.77\,$\pm$\,0.02 \\
+  Congressional & \textbf{0.96\,$\pm$\,0.03} & \textbf{0.96\,$\pm$\,0.03} & \underline{0.95\,$\pm$\,0.03} & 0.94\,$\pm$\,0.03 & \underline{0.95\,$\pm$\,0.03} & 0.94\,$\pm$\,0.03 & 0.58\,$\pm$\,0.04 \\
+  \emph{Average} & \textbf{0.83} & \textbf{0.83} & \textbf{0.83} & \textbf{0.83} & \underline{0.82} & \textbf{0.83} & 0.80 \\
+  \emph{W/T/L} & --- & 4/10/4 & 4/10/4 & 5/6/7 & 8/7/3 & 8/2/8 & 5/5/8 \\
+
+=== Table rows: SVM accuracy (mean \pm std; Acc_full column not included) ===
+  Wine & 0.96\,$\pm$\,0.02 & \underline{0.97\,$\pm$\,0.03} & \textbf{0.98\,$\pm$\,0.02} & \textbf{0.98\,$\pm$\,0.02} & \underline{0.97\,$\pm$\,0.02} & 0.94\,$\pm$\,0.05 & 0.94\,$\pm$\,0.03 \\
+  WDBC & \textbf{0.97\,$\pm$\,0.02} & \underline{0.96\,$\pm$\,0.02} & \underline{0.96\,$\pm$\,0.02} & \underline{0.96\,$\pm$\,0.02} & \textbf{0.97\,$\pm$\,0.01} & 0.91\,$\pm$\,0.03 & \underline{0.96\,$\pm$\,0.02} \\
+  Sonar & 0.68\,$\pm$\,0.08 & \underline{0.74\,$\pm$\,0.06} & 0.73\,$\pm$\,0.07 & 0.73\,$\pm$\,0.07 & 0.73\,$\pm$\,0.08 & \textbf{0.83\,$\pm$\,0.07} & 0.71\,$\pm$\,0.06 \\
+  Ionosphere & \underline{0.91\,$\pm$\,0.02} & \textbf{0.93\,$\pm$\,0.02} & \textbf{0.93\,$\pm$\,0.03} & \textbf{0.93\,$\pm$\,0.03} & \textbf{0.93\,$\pm$\,0.02} & \underline{0.91\,$\pm$\,0.05} & \underline{0.91\,$\pm$\,0.03} \\
+  Heart & \textbf{0.84\,$\pm$\,0.05} & \textbf{0.84\,$\pm$\,0.05} & \textbf{0.84\,$\pm$\,0.05} & \underline{0.83\,$\pm$\,0.04} & \underline{0.83\,$\pm$\,0.04} & 0.82\,$\pm$\,0.05 & \textbf{0.84\,$\pm$\,0.03} \\
+  German Credit & \underline{0.73\,$\pm$\,0.02} & \underline{0.73\,$\pm$\,0.02} & \textbf{0.74\,$\pm$\,0.03} & \textbf{0.74\,$\pm$\,0.03} & \underline{0.73\,$\pm$\,0.02} & \textbf{0.74\,$\pm$\,0.02} & 0.71\,$\pm$\,0.02 \\
+  Diabetes & \textbf{0.76\,$\pm$\,0.02} & \textbf{0.76\,$\pm$\,0.02} & \textbf{0.76\,$\pm$\,0.02} & \textbf{0.76\,$\pm$\,0.02} & \textbf{0.76\,$\pm$\,0.02} & \textbf{0.76\,$\pm$\,0.02} & \textbf{0.76\,$\pm$\,0.02} \\
+  Iris & \textbf{0.96\,$\pm$\,0.04} & \textbf{0.96\,$\pm$\,0.04} & \textbf{0.96\,$\pm$\,0.04} & \textbf{0.96\,$\pm$\,0.04} & \textbf{0.96\,$\pm$\,0.04} & \textbf{0.96\,$\pm$\,0.04} & \textbf{0.96\,$\pm$\,0.04} \\
+  Glass & \textbf{0.68\,$\pm$\,0.04} & \textbf{0.68\,$\pm$\,0.04} & \textbf{0.68\,$\pm$\,0.04} & \underline{0.67\,$\pm$\,0.05} & \underline{0.67\,$\pm$\,0.04} & \underline{0.67\,$\pm$\,0.04} & \textbf{0.68\,$\pm$\,0.05} \\
+  Vehicle & \underline{0.75\,$\pm$\,0.03} & \underline{0.75\,$\pm$\,0.03} & \underline{0.75\,$\pm$\,0.03} & \underline{0.75\,$\pm$\,0.02} & \underline{0.75\,$\pm$\,0.03} & \textbf{0.76\,$\pm$\,0.03} & \underline{0.75\,$\pm$\,0.02} \\
+  Vowel & \textbf{0.94\,$\pm$\,0.01} & \textbf{0.94\,$\pm$\,0.01} & \textbf{0.94\,$\pm$\,0.01} & \textbf{0.94\,$\pm$\,0.01} & \textbf{0.94\,$\pm$\,0.01} & \underline{0.89\,$\pm$\,0.04} & \textbf{0.94\,$\pm$\,0.01} \\
+  Australian & \textbf{0.85\,$\pm$\,0.03} & \textbf{0.85\,$\pm$\,0.03} & \textbf{0.85\,$\pm$\,0.03} & \textbf{0.85\,$\pm$\,0.03} & \textbf{0.85\,$\pm$\,0.03} & \textbf{0.85\,$\pm$\,0.04} & \textbf{0.85\,$\pm$\,0.03} \\
+  Ecoli & \textbf{0.87\,$\pm$\,0.03} & \textbf{0.87\,$\pm$\,0.03} & \textbf{0.87\,$\pm$\,0.03} & \textbf{0.87\,$\pm$\,0.03} & \textbf{0.87\,$\pm$\,0.03} & \underline{0.86\,$\pm$\,0.04} & \textbf{0.87\,$\pm$\,0.03} \\
+  Yeast & \textbf{0.60\,$\pm$\,0.03} & \textbf{0.60\,$\pm$\,0.03} & \textbf{0.60\,$\pm$\,0.03} & \textbf{0.60\,$\pm$\,0.03} & \textbf{0.60\,$\pm$\,0.03} & \textbf{0.60\,$\pm$\,0.03} & \textbf{0.60\,$\pm$\,0.03} \\
+  Dermatology & 0.81\,$\pm$\,0.04 & 0.79\,$\pm$\,0.06 & 0.92\,$\pm$\,0.04 & 0.92\,$\pm$\,0.04 & 0.73\,$\pm$\,0.08 & \textbf{0.96\,$\pm$\,0.02} & \underline{0.94\,$\pm$\,0.03} \\
+  Segment & \textbf{0.94\,$\pm$\,0.00} & \textbf{0.94\,$\pm$\,0.00} & \textbf{0.94\,$\pm$\,0.00} & \textbf{0.94\,$\pm$\,0.00} & \textbf{0.94\,$\pm$\,0.00} & \underline{0.92\,$\pm$\,0.02} & \textbf{0.94\,$\pm$\,0.00} \\
+  Chess (KR-KP) & \textbf{0.99\,$\pm$\,0.00} & \textbf{0.99\,$\pm$\,0.00} & \textbf{0.99\,$\pm$\,0.00} & \textbf{0.99\,$\pm$\,0.00} & \textbf{0.99\,$\pm$\,0.00} & \underline{0.97\,$\pm$\,0.02} & 0.77\,$\pm$\,0.02 \\
+  Congressional & \underline{0.95\,$\pm$\,0.03} & \textbf{0.96\,$\pm$\,0.03} & \textbf{0.96\,$\pm$\,0.03} & \textbf{0.96\,$\pm$\,0.03} & \textbf{0.96\,$\pm$\,0.03} & \underline{0.95\,$\pm$\,0.03} & 0.61\,$\pm$\,0.01 \\
+  \emph{Average} & 0.84 & \underline{0.85} & \textbf{0.86} & \underline{0.85} & 0.84 & \underline{0.85} & 0.82 \\
+  \emph{W/T/L} & --- & 4/9/5 & 2/10/6 & 5/5/8 & 4/7/7 & 9/4/5 & 7/6/5 \\
+
+=== Table rows: runtime ===
+  Wine & 178 & \underline{0.004} & \underline{0.004} & \textbf{0.002} & \textbf{0.002} & \textbf{0.002} & 1.548 & 0.008 \\
+  WDBC & 569 & \textbf{0.025} & 0.027 & \underline{0.026} & 0.034 & 0.053 & 2.674 & 0.087 \\
+  Sonar & 208 & 1.127 & 0.027 & \underline{0.013} & \textbf{0.010} & \textbf{0.010} & 44.790 & 0.048 \\
+  Ionosphere & 351 & 0.057 & 0.059 & 0.023 & \textbf{0.017} & \underline{0.019} & 7.303 & 0.055 \\
+  Heart & 303 & \textbf{0.004} & 0.006 & \underline{0.005} & 0.006 & 0.009 & 4.883 & 0.018 \\
+  German Credit & 1000 & \underline{0.094} & 0.120 & 0.097 & \textbf{0.091} & 0.131 & 30.124 & 0.127 \\
+  Diabetes & 768 & \underline{0.017} & \textbf{0.016} & \textbf{0.016} & 0.030 & 0.051 & 6.926 & 0.051 \\
+  Iris & 150 & \textbf{0.001} & \textbf{0.001} & \textbf{0.001} & \textbf{0.001} & \textbf{0.001} & 0.309 & \underline{0.002} \\
+  Glass & 214 & \textbf{0.001} & \underline{0.002} & \textbf{0.001} & 0.003 & 0.005 & 2.388 & 0.009 \\
+  Vehicle & 846 & 0.039 & \underline{0.038} & \textbf{0.037} & 0.082 & 0.147 & 32.333 & 0.138 \\
+  Vowel & 990 & \textbf{0.028} & \underline{0.034} & \textbf{0.028} & 0.073 & 0.140 & 15.157 & 0.134 \\
+  Australian & 690 & \underline{0.018} & \underline{0.018} & \textbf{0.017} & 0.048 & 0.089 & 7.586 & 0.083 \\
+  Ecoli & 336 & \underline{0.003} & \underline{0.003} & \textbf{0.002} & 0.004 & 0.006 & 2.937 & 0.012 \\
+  Yeast & 1484 & 0.060 & \underline{0.059} & \textbf{0.056} & 0.153 & 0.238 & 17.127 & 0.221 \\
+  Dermatology & 358 & 0.157 & 0.070 & \underline{0.020} & \textbf{0.016} & 0.022 & 11.807 & 0.056 \\
+  Segment & 2310 & \textbf{0.253} & 0.301 & \underline{0.263} & 0.501 & 1.021 & 31.594 & 0.791 \\
+  Chess (KR-KP) & 3196 & \textbf{0.751} & \underline{0.945} & \textbf{0.751} & 3.099 & 11.353 & 44.275 & 2.395 \\
+  Congressional & 435 & \textbf{0.007} & 0.009 & \underline{0.008} & 0.014 & 0.020 & 1.957 & 0.026 \\
+  \emph{Average} & --- & 0.147 & \underline{0.097} & \textbf{0.076} & 0.232 & 0.740 & 14.762 & 0.237 \\
+  \emph{W/T/L} & --- & --- & 11/0/7 & 5/0/13 & 12/0/6 & 14/0/4 & 18/0/0 & 15/0/3 \\
+CCAR-E <= CCAR-H on 11/18; CCAR-H faster on ['Wine', 'Sonar', 'Diabetes', 'Iris', 'Vehicle', 'Yeast', 'Dermatology']; margins ms: [('Wine', np.float64(0.5)), ('Sonar', np.float64(1100.5)), ('Diabetes', np.float64(0.2)), ('Iris', np.float64(0.0)), ('Vehicle', np.float64(0.4)), ('Yeast', np.float64(1.0)), ('Dermatology', np.float64(86.3))]
+
+=== runtime_scatter.dat ===
+dataset n ccar-e ccar-h core-init quickreduct nicp gbnrs wnrs label
+wine 178 0.004 0.004 0.002 0.002 0.002 1.548 0.008 Wine
+wdbc 569 0.025 0.027 0.026 0.034 0.053 2.674 0.087 WDBC
+sonar 208 1.127 0.027 0.013 0.010 0.010 44.790 0.048 Sonar
+ionosphere 351 0.057 0.059 0.023 0.017 0.019 7.303 0.055 Ionosphere
+heart 303 0.004 0.006 0.005 0.006 0.009 4.883 0.018 Heart
+credit 1000 0.094 0.120 0.097 0.091 0.131 30.124 0.127 German_Credit
+diabetes 768 0.017 0.016 0.016 0.030 0.051 6.926 0.051 Diabetes
+iris 150 0.001 0.001 0.001 0.001 0.001 0.309 0.002 Iris
+glass 214 0.001 0.002 0.001 0.003 0.005 2.388 0.009 Glass
+vehicle 846 0.039 0.038 0.037 0.082 0.147 32.333 0.138 Vehicle
+vowel 990 0.028 0.034 0.028 0.073 0.140 15.157 0.134 Vowel
+australian 690 0.018 0.018 0.017 0.048 0.089 7.586 0.083 Australian
+ecoli 336 0.003 0.003 0.002 0.004 0.006 2.937 0.012 Ecoli
+yeast 1484 0.060 0.059 0.056 0.153 0.238 17.127 0.221 Yeast
+dermatology 358 0.157 0.070 0.020 0.016 0.022 11.807 0.056 Dermatology
+segment 2310 0.253 0.301 0.263 0.501 1.021 31.594 0.791 Segment
+chess 3196 0.751 0.945 0.751 3.099 11.353 44.275 2.395 Chess
+vote 435 0.007 0.009 0.008 0.014 0.020 1.957 0.026 Congressional
