@@ -57,7 +57,7 @@ def main() -> None:
     ptxt = f"{pv:.2f}" if pv >= 0.01 else "{}\\times10^{{{}}}".format(*f"{pv:.1e}".split("e"))
     ax1.text(0.04, 0.05, rf"Spearman $\rho={rho:.2f}$, $p={ptxt}$", transform=ax1.transAxes, fontsize=8)
     ax1.set_xscale("log", base=2); ax1.set_yscale("log"); ax1.set_ylim(0.5, 7)
-    ax1.set_xticks([4, 8, 16, 32, 64]); ax1.set_xticklabels(["4", "8", "16", "32", "64"])
+    ax1.set_xlim(3.4, 75); ax1.set_xticks([4, 8, 16, 32, 64]); ax1.set_xticklabels(["4", "8", "16", "32", "64"])
     ax1.set_yticks([0.6, 1, 2, 3, 5]); ax1.set_yticklabels(["0.6", "1", "2", "3", "5"])
     ax1.set_xlabel(r"number of condition attributes $|C|$")
     ax1.set_ylabel("speedup of core-first\npair enumeration")
@@ -70,7 +70,7 @@ def main() -> None:
     df = bench[bench.algorithm.isin(methods)]
     fits = {m: cost_fit(df, m, "n_samples") for m in methods}
     e = fits["ccar_exact"]
-    cs = np.logspace(np.log10(8), 3, 200)
+    cs = np.logspace(np.log10(8), 2, 200)
     colors = {"ccar_h": "#c8414b", "core_init_greedy": "0.5", "quick_reduct": "#b07a1a",
               "nicp": "#1f5fd6", "wnrs": "#3f8a4f"}
     labels = {"ccar_h": "CCAR-H", "core_init_greedy": "Core-init", "quick_reduct": "QuickReduct",
@@ -83,20 +83,16 @@ def main() -> None:
         f = fits[m]
         base = f["a"] - e["a"] + (f["b"] - e["b"]) * np.log(1000)
         r = np.exp(base + (f["c"] - e["c"]) * np.log(cs))
-        ax2.plot(cs, r, color=colors[m], lw=1.4, ls="--" if m == "core_init_greedy" else "-")
+        ax2.plot(cs, r, color=colors[m], lw=1.4, ls="--" if m == "core_init_greedy" else "-", label=labels[m])
         ends.append([np.log(r[-1]), labels[m], colors[m]])
         if f["c"] != e["c"]:
             cross = np.exp(-base / (f["c"] - e["c"]))
-            if 8 <= cross <= 1000:
+            if 8 <= cross <= 100:
                 ax2.plot(cross, 1, "o", ms=3.5, color=colors[m], mec="white", mew=0.6)
-    ends.sort()
-    for k in range(1, len(ends)):
-        ends[k][0] = max(ends[k][0], ends[k - 1][0] + 0.28)
-    for ly, lab, col in ends:
-        ax2.text(1050, np.exp(ly), lab, color=col, fontsize=7, va="center")
+    ax2.legend(fontsize=7, frameon=False, loc="upper right")
     ax2.set_xscale("log"); ax2.set_yscale("log")
-    ax2.set_xlim(8, 1000); ax2.set_ylim(0.15, 40)
-    ax2.set_xticks([10, 30, 100, 300, 1000]); ax2.set_xticklabels(["10", "30", "100", "300", "1000"])
+    ax2.set_xlim(8, 100); ax2.set_ylim(0.15, 40)
+    ax2.set_xticks([10, 30, 100]); ax2.set_xticklabels(["10", "30", "100"])
     ax2.set_yticks([0.3, 1, 3, 10, 30]); ax2.set_yticklabels(["0.3", "1", "3", "10", "30"])
     ax2.set_xlabel(r"number of condition attributes $|C|$")
     ax2.set_ylabel(r"cost ratio $t_{\mathrm{baseline}}/t_{\mathrm{CCAR\text{-}E}}$")

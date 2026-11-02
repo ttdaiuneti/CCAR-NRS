@@ -66,32 +66,36 @@ mac = {
 (RES / "external_macros.tex").write_text("".join(f"\\newcommand{{\\ext{k}}}{{{v}}}\n" for k, v in mac.items()))
 
 
+tc = d.groupby(["table", "method"]).runtime.mean().unstack()
+T = ["CCAR-E", "CCAR-H", "Core-init", "Core-init-P", "QuickReduct", "FNC", "FHARA"]
+
+
 def cells(row):
-    txt = [f"{row[m]:.3f}" for m in M]
+    txt = [f"{row[m]:.3f}" for m in T]
     best = min(float(x) for x in txt)
     return " & ".join(f"\\textbf{{{x}}}" if float(x) == best else x for x in txt)
 
 
 meta = d.groupby("table").agg(n=("n", "first"), core=("n_core", "mean"))
-a = ["\\begin{table}[!t]", "  \\caption{Reduction runtime in seconds on the UCI tables, timed in one session (means over five folds). "
-     "$|\\U|$: training-fold size. CI-P: Core-init-P. QR: QuickReduct. Bold: fastest as printed.}", "  \\label{tab:external}", "  \\footnotesize",
-     "  \\begin{tabular*}{\\columnwidth}{@{\\extracolsep{\\fill}}lrrrrrrrr@{}}", "    \\toprule",
-     "    Table & $|\\U|$ & $|\\CORE_\\delta|$ & CCAR-E & CCAR-H & CI-P & QR & FNC & FHARA \\\\", "    \\midrule"]
+a = ["\\begin{table*}[!t]", "  \\caption{Reduction runtime in seconds on the UCI tables, timed in one session (means over five folds). "
+     "$|\\U|$: training-fold size. CI: Core-init. CI-P: Core-init-P. QR: QuickReduct. Bold: fastest as printed.}", "  \\label{tab:external}", "  \\footnotesize", "  \\setlength{\\tabcolsep}{3pt}",
+     "  \\begin{tabular*}{\\textwidth}{@{\\extracolsep{\\fill}}lrrrrrrrrr@{}}", "    \\toprule",
+     "    Table & $|\\U|$ & $|\\CORE_\\delta|$ & CCAR-E & CCAR-H & CI & CI-P & QR & FNC & FHARA \\\\", "    \\midrule"]
 for k in meta.sort_values("n").index:
-    a.append(f"    {NAMES[k]} & {meta.n[k]:,} & {meta.core[k]:.1f} & {cells(t.loc[k])} \\\\".replace(",", "{,}"))
-a += ["    \\bottomrule", "  \\end{tabular*}", "\\end{table}"]
-C = ["CCAR-H", "Core-init-P", "QuickReduct", "FNC", "FHARA"]
-b = ["\\begin{table}[!t]", "  \\caption{Median reduction time in seconds, with the range in brackets, and median $|R|$ on Covertype subsamples. "
-     "Five subsamples per $n$, three at $n=10{,}000$, where FHARA has one run. CI-P: Core-init-P. QR: QuickReduct.}", "  \\label{tab:external-cov}", "  \\footnotesize",
-     "  \\setlength{\\tabcolsep}{2pt}", "  \\begin{tabular*}{\\columnwidth}{@{\\extracolsep{\\fill}}rlllllrr@{}}", "    \\toprule",
-     "    $n$ & CCAR-H & CI-P & QR & FNC & FHARA & $|R|_{\\mathrm{H}}$ & $|R|_{\\mathrm{FNC}}$ \\\\", "    \\midrule"]
+    a.append(f"    {NAMES[k]} & {meta.n[k]:,} & {meta.core[k]:.1f} & {cells(tc.loc[k])} \\\\".replace(",", "{,}"))
+a += ["    \\bottomrule", "  \\end{tabular*}", "\\end{table*}"]
+C = ["CCAR-H", "Core-init", "Core-init-P", "QuickReduct", "FNC", "FHARA"]
+b = ["\\begin{table*}[!t]", "  \\caption{Median reduction time in seconds, with the range in brackets, and median $|R|$ on Covertype subsamples. "
+     "Five subsamples per $n$, three at $n=10{,}000$, where FHARA has one run. CI: Core-init. CI-P: Core-init-P. QR: QuickReduct.}", "  \\label{tab:external-cov}", "  \\footnotesize",
+     "  \\setlength{\\tabcolsep}{2pt}", "  \\begin{tabular*}{\\textwidth}{@{\\extracolsep{\\fill}}rllllllrr@{}}", "    \\toprule",
+     "    $n$ & CCAR-H & CI & CI-P & QR & FNC & FHARA & $|R|_{\\mathrm{H}}$ & $|R|_{\\mathrm{FNC}}$ \\\\", "    \\midrule"]
 f = lambda v: f"{v:.1f}" if v >= 10 else f"{v:.2f}"
 for n in sorted(s.n.unique()):
     med = " & ".join(f(q.loc[(n, m), "median"]) for m in C)
     rng = " & ".join("" if q.loc[(n, m), "count"] == 1 else f"({f(q.loc[(n, m), 'min'])}--{f(q.loc[(n, m), 'max'])})" for m in C)
     b.append(f"    {n:,} & ".replace(",", "{,}") + med + f" & {sz.loc[(n, 'CCAR-H')]:.0f} & {sz.loc[(n, 'FNC')]:.0f} \\\\")
     b.append(f"     & {rng} & & \\\\")
-b += ["    \\bottomrule", "  \\end{tabular*}", "\\end{table}"]
+b += ["    \\bottomrule", "  \\end{tabular*}", "\\end{table*}"]
 (RES / "external_table.tex").write_text("\n".join(a + [""] + b) + "\n")
 print(open(RES / "external_macros.tex").read())
 print(dict(zip(fam, [round(x, 5) for x in raw])), t.index[t["CCAR-E"] < t.FNC].tolist())

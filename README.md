@@ -10,7 +10,7 @@ Residual Conflicting Pairs" (Tran, Nguyen, Nguyen).
   accuracies and validity checks), per-dataset summaries (`*_folds.csv`), `benchmark_20datasets.csv`, Covertype runs
   (`scalability_v9.csv`), synthetic wide tables (`wide_table_stress_v9.csv`), `manuscript_numbers_v9.txt` (every statistic in the paper),
   `RUN_INFO.txt` (hardware, versions, command).
-- `results_v11/` — comparison with FNC and FHARA and the pair-filtered Core-init variant: UCI folds, Covertype subsamples, wide tables, peak memory, and the generated table and macros.
+- `results_v11/` — comparison with FNC and FHARA and the pair-filtered Core-init variant: UCI folds, Covertype subsamples, wide tables, peak memory, the generated table and macros, and `pruned_folds.csv` (one backward pass on QuickReduct and Core-init).
 - `results_v7_unchanged/` — radius sweep and fold stability of the core. These involve only CCAR-E/CCAR-H, whose code did not change
   between v7 and v8, so they were not re-run.
 
@@ -27,6 +27,7 @@ pip install -r requirements.txt
 python3 -m experiments.run_benchmark --jobs 1 --results-dir ../results_v9     # 18 datasets, about 30 min on an Apple M4 Pro
 python3 -m experiments.run_scalability                                        # Covertype, about 50 min
 python3 -m experiments.run_wide_table_stress
+python3 scripts/manuscript_tables.py <out_dir>   # every table and quoted number
 python3 scripts/manuscript_numbers.py ../results_v9/benchmark_20datasets.csv
 python3 -m experiments.run_external_baselines                                # about 45 min
 python3 experiments/external_report.py

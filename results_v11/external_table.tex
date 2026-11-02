@@ -1,50 +1,51 @@
-\begin{table}[!t]
-  \caption{Reduction runtime in seconds on the UCI tables, timed in one session (means over five folds). $|\U|$: training-fold size. CI-P: Core-init-P. QR: QuickReduct. Bold: fastest as printed.}
+\begin{table*}[!t]
+  \caption{Reduction runtime in seconds on the UCI tables, timed in one session (means over five folds). $|\U|$: training-fold size. CI: Core-init. CI-P: Core-init-P. QR: QuickReduct. Bold: fastest as printed.}
   \label{tab:external}
   \footnotesize
-  \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}lrrrrrrrr@{}}
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}lrrrrrrrrr@{}}
     \toprule
-    Table & $|\U|$ & $|\CORE_\delta|$ & CCAR-E & CCAR-H & CI-P & QR & FNC & FHARA \\
+    Table & $|\U|$ & $|\CORE_\delta|$ & CCAR-E & CCAR-H & CI & CI-P & QR & FNC & FHARA \\
     \midrule
-    Iris & 120 & 4.0 & 0.001 & 0.001 & \textbf{0.000} & 0.001 & \textbf{0.000} & 0.001 \\
-    Wine & 142 & 0.0 & 0.004 & 0.004 & 0.003 & 0.002 & \textbf{0.001} & 0.005 \\
-    Sonar & 166 & 0.0 & 1.110 & 0.027 & 0.019 & 0.009 & \textbf{0.005} & 0.024 \\
-    Glass & 171 & 7.0 & \textbf{0.001} & \textbf{0.001} & \textbf{0.001} & 0.003 & 0.002 & 0.011 \\
-    Heart & 242 & 2.6 & 0.004 & 0.005 & 0.003 & 0.006 & \textbf{0.002} & 0.009 \\
-    Ecoli & 268 & 6.0 & 0.002 & 0.002 & 0.002 & 0.004 & \textbf{0.001} & 0.008 \\
-    Ionosphere & 280 & 0.0 & 0.054 & 0.061 & 0.031 & 0.016 & \textbf{0.007} & 0.035 \\
-    Dermatology & 286 & 0.0 & 0.152 & 0.066 & 0.026 & 0.015 & \textbf{0.010} & 0.054 \\
-    Congressional & 348 & 5.2 & 0.007 & 0.009 & 0.005 & 0.014 & \textbf{0.004} & 0.021 \\
-    WDBC & 455 & 5.0 & 0.024 & 0.027 & 0.020 & 0.031 & \textbf{0.005} & 0.036 \\
-    Australian & 552 & 13.6 & 0.017 & 0.017 & \textbf{0.014} & 0.047 & 0.019 & 0.057 \\
-    Diabetes & 614 & 8.0 & 0.016 & 0.016 & 0.013 & 0.029 & \textbf{0.005} & 0.023 \\
-    Vehicle & 676 & 13.0 & 0.037 & 0.036 & 0.032 & 0.079 & \textbf{0.017} & 0.110 \\
-    Vowel & 792 & 9.6 & 0.026 & 0.032 & 0.022 & 0.070 & \textbf{0.018} & 0.139 \\
-    German Credit & 800 & 1.4 & 0.090 & 0.116 & 0.065 & 0.086 & \textbf{0.012} & 0.076 \\
-    Yeast & 1{,}187 & 8.0 & 0.057 & 0.057 & \textbf{0.050} & 0.148 & 0.058 & 0.249 \\
-    Segment & 1{,}848 & 10.8 & 0.247 & 0.291 & 0.211 & 0.488 & \textbf{0.103} & 0.573 \\
-    Chess & 2{,}556 & 24.6 & 0.734 & 0.919 & \textbf{0.589} & 2.987 & 1.146 & 4.296 \\
+    Iris & 120 & 4.0 & 0.001 & 0.001 & \textbf{0.000} & \textbf{0.000} & 0.001 & \textbf{0.000} & 0.001 \\
+    Wine & 142 & 0.0 & 0.004 & 0.004 & 0.002 & 0.003 & 0.002 & \textbf{0.001} & 0.005 \\
+    Sonar & 166 & 0.0 & 1.110 & 0.027 & 0.013 & 0.019 & 0.009 & \textbf{0.005} & 0.024 \\
+    Glass & 171 & 7.0 & \textbf{0.001} & \textbf{0.001} & \textbf{0.001} & \textbf{0.001} & 0.003 & 0.002 & 0.011 \\
+    Heart & 242 & 2.6 & 0.004 & 0.005 & 0.005 & 0.003 & 0.006 & \textbf{0.002} & 0.009 \\
+    Ecoli & 268 & 6.0 & 0.002 & 0.002 & 0.002 & 0.002 & 0.004 & \textbf{0.001} & 0.008 \\
+    Ionosphere & 280 & 0.0 & 0.054 & 0.061 & 0.022 & 0.031 & 0.016 & \textbf{0.007} & 0.035 \\
+    Dermatology & 286 & 0.0 & 0.152 & 0.066 & 0.020 & 0.026 & 0.015 & \textbf{0.010} & 0.054 \\
+    Congressional & 348 & 5.2 & 0.007 & 0.009 & 0.007 & 0.005 & 0.014 & \textbf{0.004} & 0.021 \\
+    WDBC & 455 & 5.0 & 0.024 & 0.027 & 0.026 & 0.020 & 0.031 & \textbf{0.005} & 0.036 \\
+    Australian & 552 & 13.6 & 0.017 & 0.017 & 0.016 & \textbf{0.014} & 0.047 & 0.019 & 0.057 \\
+    Diabetes & 614 & 8.0 & 0.016 & 0.016 & 0.015 & 0.013 & 0.029 & \textbf{0.005} & 0.023 \\
+    Vehicle & 676 & 13.0 & 0.037 & 0.036 & 0.036 & 0.032 & 0.079 & \textbf{0.017} & 0.110 \\
+    Vowel & 792 & 9.6 & 0.026 & 0.032 & 0.026 & 0.022 & 0.070 & \textbf{0.018} & 0.139 \\
+    German Credit & 800 & 1.4 & 0.090 & 0.116 & 0.093 & 0.065 & 0.086 & \textbf{0.012} & 0.076 \\
+    Yeast & 1{,}187 & 8.0 & 0.057 & 0.057 & 0.054 & \textbf{0.050} & 0.148 & 0.058 & 0.249 \\
+    Segment & 1{,}848 & 10.8 & 0.247 & 0.291 & 0.254 & 0.211 & 0.488 & \textbf{0.103} & 0.573 \\
+    Chess & 2{,}556 & 24.6 & 0.734 & 0.919 & 0.732 & \textbf{0.589} & 2.987 & 1.146 & 4.296 \\
     \bottomrule
   \end{tabular*}
-\end{table}
+\end{table*}
 
-\begin{table}[!t]
-  \caption{Median reduction time in seconds, with the range in brackets, and median $|R|$ on Covertype subsamples. Five subsamples per $n$, three at $n=10{,}000$, where FHARA has one run. CI-P: Core-init-P. QR: QuickReduct.}
+\begin{table*}[!t]
+  \caption{Median reduction time in seconds, with the range in brackets, and median $|R|$ on Covertype subsamples. Five subsamples per $n$, three at $n=10{,}000$, where FHARA has one run. CI: Core-init. CI-P: Core-init-P. QR: QuickReduct.}
   \label{tab:external-cov}
   \footnotesize
   \setlength{\tabcolsep}{2pt}
-  \begin{tabular*}{\columnwidth}{@{\extracolsep{\fill}}rlllllrr@{}}
+  \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}}rllllllrr@{}}
     \toprule
-    $n$ & CCAR-H & CI-P & QR & FNC & FHARA & $|R|_{\mathrm{H}}$ & $|R|_{\mathrm{FNC}}$ \\
+    $n$ & CCAR-H & CI & CI-P & QR & FNC & FHARA & $|R|_{\mathrm{H}}$ & $|R|_{\mathrm{FNC}}$ \\
     \midrule
-    1{,}000 & 0.16 & 0.13 & 0.75 & 0.41 & 1.91 & 21 & 24 \\
-     & (0.16--0.17) & (0.13--0.13) & (0.63--0.90) & (0.13--0.75) & (1.14--3.64) & & \\
-    2{,}000 & 0.73 & 0.56 & 4.69 & 3.57 & 16.5 & 28 & 33 \\
-     & (0.73--0.76) & (0.55--0.57) & (3.78--5.66) & (1.71--4.10) & (10.2--24.2) & & \\
-    5{,}000 & 5.70 & 3.87 & 49.2 & 20.0 & 126.2 & 34 & 38 \\
-     & (5.62--5.76) & (3.82--4.09) & (42.9--58.0) & (9.25--26.9) & (65.4--191.8) & & \\
-    10{,}000 & 20.7 & 13.7 & 195.1 & 81.6 & 396.6 & 37 & 41 \\
-     & (19.8--20.9) & (13.7--14.1) & (165.0--196.4) & (30.2--85.1) &  & & \\
+    1{,}000 & 0.16 & 0.23 & 0.13 & 0.75 & 0.41 & 1.91 & 21 & 24 \\
+     & (0.16--0.17) & (0.22--0.27) & (0.13--0.13) & (0.63--0.90) & (0.13--0.75) & (1.14--3.64) & & \\
+    2{,}000 & 0.73 & 1.66 & 0.56 & 4.69 & 3.57 & 16.5 & 28 & 33 \\
+     & (0.73--0.76) & (1.46--1.79) & (0.55--0.57) & (3.78--5.66) & (1.71--4.10) & (10.2--24.2) & & \\
+    5{,}000 & 5.70 & 25.1 & 3.87 & 49.2 & 20.0 & 126.2 & 34 & 38 \\
+     & (5.62--5.76) & (22.1--26.9) & (3.82--4.09) & (42.9--58.0) & (9.25--26.9) & (65.4--191.8) & & \\
+    10{,}000 & 20.7 & 112.3 & 13.7 & 195.1 & 81.6 & 396.6 & 37 & 41 \\
+     & (19.8--20.9) & (112.2--116.8) & (13.7--14.1) & (165.0--196.4) & (30.2--85.1) &  & & \\
     \bottomrule
   \end{tabular*}
-\end{table}
+\end{table*}

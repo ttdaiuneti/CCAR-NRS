@@ -1,4 +1,4 @@
-# CCAR-NRS — code (Supplemental File S2)
+# CCAR-NRS — code
 
 Implementation and experiment scripts for *Core-Centric Attribute Reduction for Neighborhood Rough Sets without Discernibility Matrix Construction*.
 
@@ -9,7 +9,7 @@ Implementation and experiment scripts for *Core-Centric Attribute Reduction for 
 | `ccar/` | CCAR-NRS: shared blocked NRS kernel (`nrs.py`), one-pass core identification (`core.py`), conflicting pairs and residual family (`conflicting.py`), hitting-set solvers, CCAR-E / CCAR-H / surrogate pipeline |
 | `baselines/` | Core-init-Greedy, QuickReduct-NRS, NIP-NRS (`nicp.py`), GBNRS, WNRS, Wang kNN-NRS |
 | `experiments/` | Benchmark runner, ablation, delta sweep, wide-table stress test, Covertype scalability, dataset loaders |
-| `scripts/` | Regenerate every benchmark number, table and figure of the paper from Supplemental File S1 |
+| `scripts/` | Regenerate every benchmark number, table and figure of the paper from the stored results |
 | `tests/` | Unit tests |
 
 ## Environment
