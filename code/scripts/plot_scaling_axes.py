@@ -74,7 +74,7 @@ def main() -> None:
     colors = {"ccar_h": "#c8414b", "core_init_greedy": "0.5", "quick_reduct": "#b07a1a",
               "nicp": "#1f5fd6", "wnrs": "#3f8a4f"}
     labels = {"ccar_h": "CCAR-H", "core_init_greedy": "Core-init", "quick_reduct": "QuickReduct",
-              "nicp": "NIP-NRS", "wnrs": "WNRS"}
+              "nicp": "NIP-NRS", "wnrs": "W-greedy"}
     ax2.axvspan(8, 60, color="0.92", lw=0)
     ax2.text(9, 0.18, "measured\nrange", fontsize=7, color="0.4", va="bottom")
     ax2.axhline(1, ls="--", color="0.5", lw=0.8)

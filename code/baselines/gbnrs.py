@@ -1,6 +1,7 @@
-"""GBNRS attribute reduction (Xia et al., IEEE TKDE 2020).
+"""Greedy forward search on the share of objects in granular balls of purity >= 0.9.
 
-Using granular balls with purity_threshold=0.9 for robust performance.
+This is not GBNRS of Xia et al.: see gbnrs_xia.py for Algorithm 1 of that paper, which the
+manuscript uses. Kept to reproduce the earlier results_v9 column and other projects that import it.
 """
 
 from __future__ import annotations
@@ -35,7 +36,7 @@ def compute_ball_stats(X: np.ndarray, labels: np.ndarray, indices: List[int], at
 
 def generate_granular_balls(X: np.ndarray, labels: np.ndarray, attrs: List[int], 
                            min_sample: int = 2, purity_threshold: float = 0.9, max_depth: int = 20) -> List[GranularBall]:
-    """Algorithm 1 (Xia 2020): Granular Ball Generation."""
+    """Recursive 2-means splitting until purity_threshold."""
     balls = []
 
     def split_ball(indices: List[int], depth: int = 0):
@@ -74,7 +75,7 @@ def compute_gb_dependency(X: np.ndarray, labels: np.ndarray, attrs: List[int],
 
 def gbnrs_reduction(X: np.ndarray, y: np.ndarray, delta: float = 0.1, *, 
                     purity_threshold: float = 0.9, verbose: bool = False) -> list[int]:
-    """Algorithm 2 (Xia 2020): GBNRS Attribute Reduction."""
+    """Forward greedy until the granular-ball dependency of all attributes is reached."""
     import time
     t_start = time.time()
     del delta  # GBNRS uses adaptive granular balls, not delta-neighborhoods

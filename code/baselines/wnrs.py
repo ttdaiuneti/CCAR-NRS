@@ -1,6 +1,7 @@
-"""Weighted NRS attribute reduction (Hu et al., WNRS).
+"""Weighted greedy attribute reduction (W-greedy), after the idea of WNRS (Hu et al. 2021).
 
-Attribute weights derive from per-attribute neighborhood entropy; forward
+This is not the WNRS model, which uses correlation-based weights inside a weighted
+Euclidean relation and tunes the radius. Attribute weights derive from per-attribute neighborhood entropy; forward
 greedy selection uses standard Hu NRS dependency with weighted significance
 sig_w(a|B) = w_a * (gamma(B union {a}) - gamma(B)).
 """

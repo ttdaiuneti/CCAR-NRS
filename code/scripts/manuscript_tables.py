@@ -5,7 +5,8 @@ Usage: python scripts/manuscript_tables.py <out_dir>
 Writes <out_dir>/experiment_numbers.tex (one macro per quoted number) and one
 tab_*.tex per table. Inputs: results_v9 (benchmark, Covertype, wide tables),
 results_v7_unchanged (plain greedy loops, core stability, radius sweep) and
-results_v11 (FNC, FHARA, Core-init-P; see experiments/external_report.py).
+results_v11 (FNC, FHARA, Core-init-P; see experiments/external_report.py) and
+results_v12 (GBNRS as in Algorithm 1 of its source; see experiments/run_gbnrs_xia.py).
 No number is typed by hand.
 """
 
@@ -31,7 +32,8 @@ ROOT = HERE.parents[1]
 V9 = ROOT / "results_v9"
 V7 = ROOT / "results_v7_unchanged" if (ROOT / "results_v7_unchanged").exists() else ROOT / "results_v7"
 V11 = ROOT / "results_v11"
-HEAD = ["CCAR-E", "CCAR-H", "Core-init", "QR", "NIP-NRS", "GBNRS", "WNRS"]
+V12 = ROOT / "results_v12"
+HEAD = ["CCAR-E", "CCAR-H", "Core-init", "QR", "NIP-NRS", "GBNRS", "W-greedy"]
 GROUPS = [("Small-scale", ["iris", "wine", "sonar", "glass", "heart", "ecoli", "ionosphere", "dermatology"]),
           ("Medium-scale", ["vote", "wdbc", "australian", "diabetes", "vehicle", "vowel", "credit"]),
           ("Large-scale", ["yeast", "segment", "chess"])]
@@ -73,9 +75,24 @@ def fmt_p(p: float) -> str:
     return f"{p:.3f}"
 
 
+def with_xia_gbnrs(raw: pd.DataFrame) -> pd.DataFrame:
+    """Replace the GBNRS rows of the benchmark by the run of results_v12."""
+    x = pd.read_csv(V12 / "gbnrs_xia_folds.csv")
+    assert len(x) == 90
+    g = x.groupby("dataset").agg(n_reduct_mean=("n_reduct", "mean"), runtime_mean=("time_ten_runs_sec", "mean"), knn_mean=("knn", "mean"),
+                                 svm_mean=("svm", "mean"), n_folds_valid=("valid", "sum"), n_folds_minimal=("minimal", "sum"))
+    g["valid_reduct"] = g.n_folds_valid == 5
+    raw = raw.copy()
+    raw["valid_reduct"] = raw.valid_reduct.astype(object)
+    mask = raw.algorithm == "gbnrs"
+    for col in g.columns:
+        raw.loc[mask, col] = raw.loc[mask, "dataset"].map(g[col]).values
+    return raw
+
+
 def main(out: Path) -> None:
     out.mkdir(parents=True, exist_ok=True)
-    raw = pd.read_csv(V9 / "benchmark_20datasets.csv")
+    raw = with_xia_gbnrs(pd.read_csv(V9 / "benchmark_20datasets.csv"))
     df = raw[raw.algorithm.isin(METHODS)].copy()
     assert len(df) == 126 and not df[["n_reduct_mean", "runtime_mean", "knn_mean", "svm_mean"]].isna().any().any()
     df["valid_reduct"] = df.valid_reduct.astype(str).str.lower() == "true"
@@ -118,7 +135,7 @@ def main(out: Path) -> None:
             for d in bad:
                 by.setdefault(int(nvalid.loc[d, m]), []).append(DS_NAME[d])
             ok = [DS_NAME[d] for d in DS_ORDER if valid.loc[d, m]]
-            txt = f"All except {' and '.join(ok)}: " + "; ".join(f"{', '.join(v)} ({k})" for k, v in sorted(by.items()))
+            txt = f"All except {', '.join(ok)}: " + "; ".join(f"{', '.join(v)} ({k})" for k, v in sorted(by.items()))
         else:
             txt = ", ".join(f"{DS_NAME[d]} ({int(nvalid.loc[d, m])})" for d in bad) or "---"
         name = "QuickReduct" if h == "QR" else h
@@ -208,7 +225,11 @@ def main(out: Path) -> None:
     assert all(abs(tt[m][0] - tt['quick_reduct'][0]) < 1e-9 for m in ["ccar_h", "core_init_greedy"])
     # counts quoted in words in the text
     assert (prt.quick_reduct > prt.ccar_exact).sum() == 12 and (prt.core_init_greedy < prt.ccar_exact).sum() == 13
-    assert (prt.ccar_exact <= prt.ccar_h).sum() == 11 and (prt.gbnrs == prt.max(axis=1)).all()
+    assert (prt.ccar_exact <= prt.ccar_h).sum() == 11
+    # GBNRS times cover ten runs, as in its source
+    assert (prt.gbnrs == prt.max(axis=1)).sum() == 17
+    assert prt.max(axis=1).drop("sonar").eq(prt.gbnrs.drop("sonar")).all() and (prt.gbnrs / 10 > prt.ccar_exact).sum() == 15
+    NUM.update(TimeRunGB=f"{prt.gbnrs.mean() / 10:.2f}")
     assert fr['size'][3].ccar_exact == fr['size'][3].min()
 
     q5 = friedman(pivot(df, "n_reduct_mean", methods=all_valid), False)
@@ -223,7 +244,11 @@ def main(out: Path) -> None:
                InconsTimeCI=f"{ti[3].core_init_greedy:.2f}", InconsTimeE=f"{ti[3].ccar_exact:.2f}",
                GBInvalidCons=int((~valid.gbnrs[consistent]).sum()), GBInvalidIncons=int((~valid.gbnrs[inconsistent]).sum()))
     assert sc[1] < 0.05 and si[1] < 0.05 and tc[1] < 1e-3 and ti[1] < 1e-3
-    assert (~valid.wnrs[inconsistent]).sum() == 0 and si[3].gbnrs == si[3].min()
+    assert (~valid.wnrs[inconsistent]).sum() == 0 and si[3].gbnrs == si[3].min() and si[1] < 1e-3
+    # rank gaps above the critical difference, as stated in the text
+    gaps = lambda f: {(a, b) for a in METHODS for b in METHODS if f[3][b] - f[3][a] > f[2]}
+    assert gaps(sc) == {("ccar_exact", "gbnrs"), ("ccar_exact", "quick_reduct")}
+    assert gaps(si) == {("gbnrs", "wnrs"), ("gbnrs", "quick_reduct"), ("gbnrs", "nicp")}
 
     # accuracy cases named in the text
     ds_cells = {"DermE": pk.ccar_exact["dermatology"], "DermFull": full.knn["dermatology"], "DermCI": pk.core_init_greedy["dermatology"],
@@ -263,7 +288,7 @@ def main(out: Path) -> None:
     NUM.update(LooTimeLo=f"{min(loo['Time']):.2f}", LooTimeHi=f"{max(loo['Time']):.2f}", LooSizeLo=f"{min(loo['Size']):.2f}", LooSizeHi=f"{max(loo['Size']):.2f}")
 
     # plain loops
-    v7 = pd.read_csv(V7 / "benchmark_20datasets.csv")
+    v7 = with_xia_gbnrs(pd.read_csv(V7 / "benchmark_20datasets.csv"))
     a7, a9 = v7[v7.algorithm.isin(METHODS)].groupby("algorithm").runtime_mean.sum(), df.groupby("algorithm").runtime_mean.sum()
     slow = (a7 / a9)[["core_init_greedy", "quick_reduct", "nicp", "wnrs"]]
     NUM.update(PlainLo=f"{slow.min():.0f}", PlainHi=f"{slow.max():.0f}", PlainCells=len(df) * 5)
@@ -293,15 +318,19 @@ def main(out: Path) -> None:
                RhoFrac=f"{r_f.statistic:.2f}", RhoFracP=f"{r_f.pvalue:.2f}", RhoSize=f"{r_u.statistic:.2f}", RhoSizeP=f"{r_u.pvalue:.3f}",
                RhoCoreWidth=f"{r_w.statistic:.3f}".replace("-", "-"), FracNarrow=f"{frac[narrow].median():.2f}", FracWide=f"{frac[~narrow].median():.2f}",
                DensityMax=f"{abl.pair_ratio.max():.2f}", DensityCount=n_low)
+    # tables named in the remark on the reduct-size bound
+    res = (meta.n_features[DS_ORDER] - abl.n_core).loc[DS_ORDER]
+    assert set(res.index[abl.n_pairs < res]) == {"glass", "vehicle", "ecoli", "vowel"} and set(res.index[res == 0]) == {"iris", "diabetes", "australian", "yeast"}
+    assert abl.n_pairs["vowel"] == 2 and res["vowel"] == 3 and all(abl.n_pairs[d] > res[d] for d in DS_ORDER if res[d] > 0 and abl.n_pairs[d] >= res[d])
     assert sp[nonempty].idxmin() == "diabetes" and sp[nonempty].idxmax() == "chess"
 
     # ---- cost fits ------------------------------------------------------------------------
     fits = {a: cost_fit(df, a, "n_samples") for a in METHODS}
-    for a, k in [("ccar_exact", "E"), ("ccar_h", "H"), ("core_init_greedy", "CI"), ("quick_reduct", "QR"), ("nicp", "NIP"), ("wnrs", "WNRS")]:
+    for a, k in [("ccar_exact", "E"), ("ccar_h", "H"), ("core_init_greedy", "CI"), ("quick_reduct", "QR"), ("nicp", "NIP"), ("wnrs", "W-greedy")]:
         NUM[f"Fitb{k}"] = f"{fits[a]['b']:.2f}"
         NUM[f"Fitc{k}"] = f"{fits[a]['c']:.2f}"
     rows = [f"{h} & {fits[a]['b']:.2f} & {fits[a]['c']:.2f} & {fits[a]['r2']:.2f} \\\\" for a, h in
-            [("ccar_exact", "CCAR-E"), ("ccar_h", "CCAR-H"), ("core_init_greedy", "Core-init"), ("quick_reduct", "QuickReduct"), ("nicp", "NIP-NRS"), ("wnrs", "WNRS")]]
+            [("ccar_exact", "CCAR-E"), ("ccar_h", "CCAR-H"), ("core_init_greedy", "Core-init"), ("quick_reduct", "QuickReduct"), ("nicp", "NIP-NRS"), ("wnrs", "W-greedy")]]
     (out / "tab_fits.tex").write_text(column_table(
         rows, "tab:cost-fits", "Fitted exponents of $\\log t=a+b\\log|\\U|+c\\log|\\C|$ over the 18 datasets.",
         "lrrr", ["Method & $b$ & $c$ & $R^2$ \\\\"], sep="4pt"))
